@@ -6,7 +6,7 @@
                 <h3 class="text-primary"><?= $header ?></h3> </div>
             <div class="col-md-7 align-self-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item active">Pengumpulan Data</li>
                 </ol>
             </div>
@@ -76,7 +76,7 @@
                         <input type="hidden" name="id" id="id">
                         <div class="btn-group float-right" role="group" aria-label="Button group">
                             <button class="btn btn-primary mr-2" type="submit">Delete</button>
-                            <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="window.location.reload();">Close</button>
                         </div>
                     <?= form_close(); ?>
                 </div>

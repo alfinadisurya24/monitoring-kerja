@@ -2,7 +2,7 @@
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         <!-- Logo -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/">
                 <!-- Logo icon -->
                 <!-- <b><img src="images/logo.png" alt="homepage" class="dark-logo" /></b> -->
                 <!--End Logo icon -->
@@ -184,7 +184,7 @@
                 <!-- Profile -->
                 <li class="nav-item dropdown">
                     <!-- <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?#= base_url('assets/images/users/5.jpg') ?>" alt="user" class="profile-pic" /></a> -->
-                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-user border rounded-circle p-2"></i></a>
+                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= ucfirst($_SESSION['nama_depan'])?> <i class="fa fa-user border rounded-circle p-2"></i></a>
                     <div class="dropdown-menu dropdown-menu-right animated zoomIn">
                         <ul class="dropdown-user">
                             <li class="pl-3">

@@ -161,10 +161,6 @@
             background-color: #1A237E
         }
 
-        <blade media|%20screen%20and%20(max-width%3A%20991px)%20%7B>.logo {
-            margin-left: 0px
-        }
-
         .image {
             width: 300px;
             height: 220px
@@ -178,7 +174,7 @@
             border-top: 1px solid #EEEEEE !important;
             margin: 0px 15px
         }
-        }
+        
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -222,14 +218,14 @@
                         <div class="row px-3 mb-4"> <label class="mb-1">
                                 <h6 class="mb-0 text-sm">Confirm Password</h6>
                             </label> <input type="password" name="passConfirm" id="passConfirm" placeholder="* confirm password"> </div>
-                        <div class="row px-3 mb-4"> <label class="mb-1">
+                        <!-- <div class="row px-3 mb-4"> <label class="mb-1">
                                 <h6 class="mb-0 text-sm">Role</h6>
                             </label>
                             <select class="form-control" name="role" id="role">
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
                             </select>
-                        </div>
+                        </div> -->
                         <!-- <div class="row px-3 mb-4">
                             <div class="custom-control custom-checkbox custom-control-inline"> <input id="chk1" type="checkbox" name="chk" class="custom-control-input"> <label for="chk1" class="custom-control-label text-sm">Remember me</label> </div> <a href="#" class="ml-auto mb-0 text-sm">Forgot Password?</a>
                         </div> -->

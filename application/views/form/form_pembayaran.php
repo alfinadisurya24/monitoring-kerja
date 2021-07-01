@@ -31,44 +31,33 @@
                             <?php } ?>
                             
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'pembayaran_satu' ? 'active' : '' ?> disabled" data-toggle="tab" href="#pembayaran_satu" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Pembayaran (1)</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'pembayaran_satu' ? 'active' : '' ?> disabled" data-toggle="tab" href="#pembayaran_satu" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Pembayaran</span></a> </li>
                                 <!-- <li class="nav-item"> <a class="nav-link <?#= $_GET['child'] == 'kajian_risiko' ? 'active' : '' ?> disabled" data-toggle="tab" href="#kajian_risiko" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Kajian Risiko</span></a> </li> -->
                             </ul>
                             <div class="tab-content tabcontent-border">
-                                <!-- profile risiko -->
-                                <!-- <div class="tab-pane p-20 <?= $_GET['child'] == 'profile_risiko' ? 'active' : '' ?>" id="profile_risiko" role="tabpanel">
-                                    <?#= form_open_multipart('main/tahapan_kerja/profile_risiko/'.$field->id_pekerjaan);?>
-                                        <input type="hidden" name="id" value="<?#= $profile_risiko->id_profile_risiko ?>">
+                                <!-- Pembayaran satu -->
+                                <div class="tab-pane  p-20 <?= $_GET['child'] == 'pembayaran' ? 'active' : '' ?>" id="pembayaran" role="tabpanel">
+                                    <?= form_open_multipart('main/tahapan_kerja/pembayaran/'.$field->id_pekerjaan);?>
+                                        <input type="hidden" name="id" value="<?= $pembayaran->id_pembayaran ?>">
                                         <div class="form-group">
-                                            <label>Upload File Profile Risiko</label>
-                                            <input type="file" class="form-control" name="upload" placeholder="* upload file" <?#= $profile_risiko->id_profile_risiko == null ? 'required' : '' ?>>
-                                            <p><?#= $profile_risiko->file_upload != null ? '<img src="/assets/images/pdf.png" width="50" alt="pdf">'.explode('/', $profile_risiko->file_upload)[1] : '' ?></p>
+                                            <label>Upload File Pembayaran</label>
+                                            <input type="file" class="form-control" name="upload" placeholder="* upload file">
+                                            <!-- <p><?#= $pembayaran->file_upload != null ? '<img src="/assets/images/pdf.png" width="50" alt="pdf">'.explode('/', $pembayaran->file_upload)[1] : '' ?></p> -->
                                         </div>
                                         <div class="form-group">
-                                            <label>Upload Cek</label>
-                                            <select class="form-control" name="upload_cek" required>
-                                                <option value="0" <?#= $profile_risiko->upload_cek ? 'selected' : '' ?>>Belum dicek</option>
-                                                <option value="1" <?#= $profile_risiko->upload_cek ? 'selected' : '' ?>>Sudah dicek</option>
+                                            <label>Tahap Pembayaran</label>
+                                            <select class="form-control" name="tahap" required>
+                                                <option value="" disabled selected>pilih tahap pembayaran</option>
+                                                <?php for ($i=1; $i < 12 ; $i++) { ?>
+                                                    <option value="file_upload<?=$i?>">Pembayaran Tahap <?= $i ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
-                                        <button class="btn btn-primary text-capitalize" type="submit">Next</button>
-                                    <?#= form_close(); ?>
-                                </div> -->
-
-                                <!-- Pmebayaran satu -->
-                                <div class="tab-pane  p-20 <?= $_GET['child'] == 'pembayaran_satu' ? 'active' : '' ?>" id="pembayaran_satu" role="tabpanel">
-                                    <?= form_open_multipart('main/tahapan_kerja/pembayaran_satu/'.$field->id_pekerjaan);?>
-                                        <input type="hidden" name="id" value="<?= $pembayaran_satu->id_pembayaran_satu ?>">
-                                        <div class="form-group">
-                                            <label>Upload File Kajian Risiko</label>
-                                            <input type="file" class="form-control" name="upload" placeholder="* upload file" <?= $pembayaran_satu->id_pembayaran_satu == null ? 'required' : '' ?>>
-                                            <p><?= $pembayaran_satu->file_upload != null ? '<img src="/assets/images/pdf.png" width="50" alt="pdf">'.explode('/', $pembayaran_satu->file_upload)[1] : '' ?></p>
-                                        </div>
                                         <div class="form-group">
                                             <label>Upload Cek</label>
                                             <select class="form-control" name="upload_cek" required>
-                                                <option value="0" <?= $pembayaran_satu->upload_cek ? 'selected' : '' ?>>Belum dicek</option>
-                                                <option value="1" <?= $pembayaran_satu->upload_cek ? 'selected' : '' ?>>Sudah dicek</option>
+                                                <option value="0" <?= $pembayaran->upload_cek ? 'selected' : '' ?>>Belum dicek</option>
+                                                <option value="1" <?= $pembayaran->upload_cek ? 'selected' : '' ?>>Sudah dicek</option>
                                             </select>
                                         </div>
                                         <button class="btn btn-primary text-capitalize" type="submit">Submit</button>

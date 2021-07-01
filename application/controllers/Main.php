@@ -34,7 +34,7 @@ class Main extends CI_Controller {
                     $tahapan_3 = 'if(kkp_id is not null AND rks_id is not null AND referensi_harga_id is not null AND hpe_id is not null, 16, 0) as tahapan_3';
                     $tahapan_4 = 'if(hps_id is not null AND ba_aanwijzing_id is not null AND cda_id is not null AND perjanjian_id is not null AND jaminan_pelaksanaan_pemeliharaan_id is not null, 16, 0) as tahapan_4';
                     $tahapan_5 = 'if(kick_off_id is not null AND spk_id is not null AND spm_id is not null AND lpp_id is not null AND nrpp_id is not null AND ba_stp_id is not null AND ba_pembayaran_id is not null AND ba_smp_id is not null AND ba_pemeriksaan_id is not null AND amandemen_perjanjian_id is not null AND ba_denda_id is not null AND dokumen_audit_id is not null, 18, 0) as tahapan_5';
-                    $tahapan_6 = 'if(pembayaran_satu_id is not null, 18, 0) as tahapan_6';
+                    $tahapan_6 = 'if(pembayaran_id is not null, 18, 0) as tahapan_6';
                     $data = [
                         'page'      => $content,
                         'title'     => 'Data Pekerjaan | Monitoring Pekerjaan',
@@ -43,10 +43,23 @@ class Main extends CI_Controller {
                         'section'   => 'content/data_pekerjaan'
                     ];
                     break;
+
+                case 'user':
+                    $data = [
+                        'page'      => $content,
+                        'title'     => 'User | Monitoring Pekerjaan',
+                        'header'    => 'User',
+                        'getData'   => $this->General_m->select('user', [], 'result'),
+                        'section'   => 'content/user'
+                    ];
+                    break;
                 
                 default:
                     $data = [
                         'title'     => 'Dashboard | Monitoring Pekerjaan',
+                        'header'    => 'Dashboard',
+                        'pekerjaan' => count($this->General_m->select('pekerjaan', [], 'result')),
+                        'user'      => count($this->General_m->select('user', [], 'result')),
                         'header'    => 'Dashboard',
                         'section'   => 'content/home'
                     ];
@@ -83,6 +96,27 @@ class Main extends CI_Controller {
                     'action'    => $action,
                     'field'     => $field,
                     'section'   => 'form/form_rab'
+                ];
+                break;
+
+            case 'user':
+                if ($action == 'create') {
+                    $field = new stdClass();
+                        $field->id_user      = null;
+                        $field->nama_depan      = null;
+                        $field->nama_belakang   = null;
+                        $field->email           = null;
+                        $field->role            = null;
+                }else {
+                    $field = $this->General_m->select('user', ['id_user' => $id], 'row');
+                }
+                $data = [
+                    'page'      => $type,
+                    'title'     => 'User | Monitoring Pekerjaan',
+                    'header'     => ucfirst($action) .' Pengumpulan Data',
+                    'action'    => $action,
+                    'field'     => $field,
+                    'section'   => 'form/form_user'
                 ];
                 break;
                 
@@ -138,7 +172,7 @@ class Main extends CI_Controller {
                     'amandemen_perjanjian'=> $this->General_m->selectJoin(['id_pekerjaan' => $id], 'row', null, null, null, 'amandemen_perjanjian'),
                     'ba_denda'   => $this->General_m->selectJoin(['id_pekerjaan' => $id], 'row', null, null, null, 'ba_denda'),
                     'dokumen_audit'     => $this->General_m->selectJoin(['id_pekerjaan' => $id], 'row', null, null, null, 'dokumen_audit'),
-                    'pembayaran_satu'   => $this->General_m->selectJoin(['id_pekerjaan' => $id], 'row', null, null, null, 'pembayaran_satu'),
+                    'pembayaran'   => $this->General_m->selectJoin(['id_pekerjaan' => $id], 'row', null, null, null, 'pembayaran'),
                     'section'   => 'form/form_pekerjaan'
                 ];
                 break;
@@ -502,13 +536,13 @@ class Main extends CI_Controller {
             case 'pembayaran':
                 $field = $this->General_m->select('pekerjaan', ['id_pekerjaan' => $id], 'row');
                 
-                if ($field->pembayaran_satu_id != null) {
-                    $pembayaran_satu = $this->General_m->select('pembayaran_satu', ['id_pembayaran_satu' => $field->pembayaran_satu_id], 'row');
+                if ($field->pembayaran_id != null) {
+                    $pembayaran = $this->General_m->select('pembayaran', ['id_pembayaran' => $field->pembayaran_id], 'row');
                 }else{
-                    $pembayaran_satu = new stdClass();
-                        $pembayaran_satu->id_pembayaran_satu  = null;
-                        $pembayaran_satu->file_upload        = null;
-                        $pembayaran_satu->upload_cek        = null;
+                    $pembayaran = new stdClass();
+                        $pembayaran->id_pembayaran  = null;
+                        $pembayaran->file_upload        = null;
+                        $pembayaran->upload_cek        = null;
                 }
             
                 $data = [
@@ -516,7 +550,7 @@ class Main extends CI_Controller {
                     'title'     => 'Pelaksanaan Pembayaran | Monitoring Pekerjaan',
                     'header'    => 'Pelaksanaan Pembayaran',
                     'field'     => $field,
-                    'pembayaran_satu'=> $pembayaran_satu,
+                    'pembayaran'=> $pembayaran,
                     'section'   => 'form/form_pembayaran'
                 ];
             break;
@@ -1257,51 +1291,28 @@ class Main extends CI_Controller {
             | Pembayaran
             |--------------------------------------------------------------------------
             */
-            // case 'profile_risiko':
-            //     $table = "profile_risiko";
-            //     $next = true;
-            //     $tahapan = 'mro';
-            //     $nextFor = "kajian_risiko";
-            //     $data = [
-            //         'upload_cek'=> $this->input->post('upload_cek')
-            //     ];
-
-            //     $profile_risiko_id = $this->input->post('id');
-
-            //     if ($profile_risiko_id != null || $profile_risiko_id != '') {
-            //         if (! empty( $_FILES['upload']['name'] )) {
-            //             $data['file_upload'] =  'profile_risiko/'.$this->filesUpload('profile_risiko', 'upload', 'file_upload', 'profile_risikoUploadUpdate', 'update', 'profile_risiko' , 'id_profile_risiko');
-            //         }
-            //         $result = $this->General_m->update($table, $data, ["id_profile_risiko" => $profile_risiko_id]); 
-            //     }else{
-            //         if (! empty( $_FILES['upload']['name'] )) {
-            //             $data['file_upload'] =  'profile_risiko/'.$this->filesUpload('profile_risiko', 'upload', null, 'profile_risikoUpload', 'create');
-            //         }
-            //         $result = $this->General_m->save($table, $data); 
-            //         $this->General_m->update("pekerjaan", ["profile_risiko_id" => $result], ["id_pekerjaan" => $id]);
-            //     }   
-            // break;
-            
-            case 'pembayaran_satu':
-                $table = "pembayaran_satu";
+            case 'pembayaran':
+                $table = "pembayaran";
                 $next = false;
+                $tahap = $this->input->post('tahap');
                 $data = [
-                    'upload_cek'=> $this->input->post('upload_cek')
+                    $tahap => $this->input->post('upload_cek')
                 ];
 
-                $pembayaran_satu_id = $this->input->post('id');
+                $pembayaran_id = $this->input->post('id');
 
-                if ($pembayaran_satu_id != null || $pembayaran_satu_id != '') {
+                if ($pembayaran_id != null || $pembayaran_id != '') {
                     if (! empty( $_FILES['upload']['name'] )) {
-                        $data['file_upload'] =  'pembayaran_satu/'.$this->filesUpload('pembayaran_satu', 'upload', 'file_upload', 'pembayaran_satuUploadUpdate', 'update', 'pembayaran_satu' , 'id_pembayaran_satu');
+                        $data[$tahap] =  'pembayaran/'.$this->filesUpload('pembayaran', 'upload', $tahap, 'pembayaranUploadUpdate', 'update', 'pembayaran' , 'id_pembayaran');
                     }
-                    $result = $this->General_m->update($table, $data, ["id_pembayaran_satu" => $pembayaran_satu_id]); 
+                    $result = $this->General_m->update($table, $data, ["id_pembayaran" => $pembayaran_id]); 
+                    // var_dump($result);die;
                 }else{
                     if (! empty( $_FILES['upload']['name'] )) {
-                        $data['file_upload'] =  'pembayaran_satu/'.$this->filesUpload('pembayaran_satu', 'upload', null, 'pembayaran_satuUpload', 'create');
+                        $data[$tahap] =  'pembayaran/'.$this->filesUpload('pembayaran', 'upload', null, 'pembayaranUpload', 'create');
                     }
                     $result = $this->General_m->save($table, $data); 
-                    $this->General_m->update("pekerjaan", ["pembayaran_satu_id" => $result], ["id_pekerjaan" => $id]);
+                    $this->General_m->update("pekerjaan", ["pembayaran_id" => $result], ["id_pekerjaan" => $id]);
                 }   
             break;
         }
@@ -1359,7 +1370,18 @@ class Main extends CI_Controller {
                     'start_date'        => $this->input->post('start_date'),
                     'finish_date'       => $this->input->post('finish_date')
                 ];
-            break;          
+            break;
+            
+            case 'user':
+                $table = "user" ;
+                $data = [
+                    'nama_depan'    => $this->input->post('nama_depan'),
+                    'nama_belakang'     => $this->input->post('nama_belakang'),
+                    'email'            => $this->input->post('email'),
+                    'pass'            => md5($this->input->post('pass')),
+                    'role'         => $this->input->post('role')
+                ];
+            break;
         }
 
 
@@ -1414,6 +1436,20 @@ class Main extends CI_Controller {
                     'finish_date'       => $this->input->post('finish_date')
                 ];
             break; 
+            case 'user':
+                $table = "user" ;
+                $where = ['id_user' => $this->input->post('id')];
+                $data = [
+                    'nama_depan'    => $this->input->post('nama_depan'),
+                    'nama_belakang'     => $this->input->post('nama_belakang'),
+                    'email'            => $this->input->post('email'),
+                    'role'         => $this->input->post('role')
+                ];
+
+                if ($this->input->post('pass') != '') {
+                    $data['pass'] = md5($this->input->post('pass'));
+                }
+            break;
         }
         
         if ($this->General_m->update($table, $data, $where)) {
@@ -1445,6 +1481,10 @@ class Main extends CI_Controller {
             case 'data-pekerjaan':
                 $table = "pekerjaan" ;
                 $where = ['id_pekerjaan' => $this->input->post('id')];
+                break;
+            case 'user':
+                $table = "user" ;
+                $where = ['id_user' => $this->input->post('id')];
                 break;
         }
 
@@ -1490,7 +1530,7 @@ class Main extends CI_Controller {
             'nama_belakang'     => $namaBelakang,
             'email'             => $emailRegis,
             'pass'              => md5($passRegis),
-            'role'              => 1
+            'role'              => 'user'
         ];
 
         $result = $this->General_m->save('user', $data);

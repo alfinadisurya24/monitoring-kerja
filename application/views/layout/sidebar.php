@@ -14,6 +14,9 @@
                         <li><a href="index1.html">Analytics </a></li>
                     </ul>
                 </li> -->
+                <?php if ($_SESSION['role'] == "admin") {?>
+                    <li class="<?= $this->uri->segment('3') == 'user' ? 'active' : '' ?>"><a href="/main/index/user">User</a></li>
+                <?php } ?>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

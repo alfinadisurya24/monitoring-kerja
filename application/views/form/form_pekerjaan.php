@@ -112,18 +112,13 @@
                                             <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pekerjaan/<?=$field->id_pekerjaan?>?child=kick_off" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 5 <br> Pelaksanaan <br> Pekerjaan </a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran_satu" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
                                         </div>
                                     </div>
                                 <?php } ?>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center mt-4 mb-3">
                                         <h3 class="font-weight-bold">File Download</h3>
-                                        <?php if ($this->session->flashdata('message')) {?>
-                                            <div class="alert alert-<?= $this->session->flashdata('alert');?>">
-                                            <?= $this->session->flashdata('message');?>
-                                            </div>
-                                        <?php } ?>
                                     </div>
                                     <div class="col-2 col-sm-2 col-md-2 col-lg-2">
                                         <?php if (!empty($ba)) { ?>
@@ -247,10 +242,20 @@
                                         <?php } ?>
                                     </div>
                                     <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                        <?php if (!empty($pembayaran_satu)) { ?>
-                                            <br><br>                                  
-                                            <a href="<?= base_url()?>main/downloadPdf/<?= $pembayaran_satu->file_upload ?>"><img src="/assets/images/pdf.png" width="50" alt="pdf"> File Pembayaran Tahap 1 </a>
-                                        <?php } ?>
+                                        <?php 
+                                            if (!empty($pembayaran)) { 
+                                                for ($i=1; $i < 12; $i++) { 
+                                                    $file = 'file_upload'.$i;
+                                                    if (file_exists('./assets/files/'.$pembayaran->$file) && $pembayaran->$file != NULL) {                                 
+                                        ?> 
+                                                        <a href="<?= base_url()?>main/downloadPdf/<?= $pembayaran->$file ?>"><img src="/assets/images/pdf.png" width="50" alt="pdf"> <br> File Pembayaran Tahap <?= $i ?> </a>
+                                                        <br><br>
+                                        <?php 
+                                                    }
+                                                }    
+                                            } 
+                                        ?>
+                                    
                                     </div>
                                 </div>
                             <?php } else{ ?>

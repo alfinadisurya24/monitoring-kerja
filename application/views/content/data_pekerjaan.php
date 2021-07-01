@@ -16,12 +16,14 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                            <?php if ($this->session->flashdata('message')) {?>
-                                <div class="alert alert-<?= $this->session->flashdata('alert');?>">
-                                <?= $this->session->flashdata('message');?>
-                                </div>
-                            <?php } ?>
-                        <a class="btn btn-md btn-primary ml-auto" href="<?=base_url()?>main/proses/data-pekerjaan/create"><i class="fa fa-plus"></i> Create</a>
+                        <?php if ($this->session->flashdata('message')) {?>
+                            <div class="alert alert-<?= $this->session->flashdata('alert');?>">
+                            <?= $this->session->flashdata('message');?>
+                            </div>
+                        <?php } ?>
+                        <?php if ($_SESSION['role'] == "admin") {?>
+                            <a class="btn btn-md btn-primary ml-auto" href="<?=base_url()?>main/proses/data-pekerjaan/create"><i class="fa fa-plus"></i> Create</a>
+                        <?php } ?>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive">
@@ -61,9 +63,12 @@
                                         <?php } ?>
                                     </td>
                                     <td>
+
                                         <a href="<?= base_url()?>main/proses/data-pekerjaan/detail/<?=$value->id_pekerjaan?>" class="btn btn-success btn-sm detailData m-1">Detail</a>
-                                        <a href="<?= base_url()?>main/proses/data-pekerjaan/update/<?=$value->id_pekerjaan?>" class="btn btn-info btn-sm editData m-1">Update</a>
-                                        <button class="btn btn-danger btn-sm m-1 deleteData" data-id="<?= $value->id_pekerjaan ?>">Delete</button>
+                                        <?php if ($_SESSION['role'] == "admin") {?>
+                                            <a href="<?= base_url()?>main/proses/data-pekerjaan/update/<?=$value->id_pekerjaan?>" class="btn btn-info btn-sm editData m-1">Update</a>
+                                            <button class="btn btn-danger btn-sm m-1 deleteData" data-id="<?= $value->id_pekerjaan ?>">Delete</button>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php } ?>                             

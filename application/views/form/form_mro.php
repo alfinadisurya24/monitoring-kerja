@@ -31,8 +31,8 @@
                             <?php } ?>
                             
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'profile_risiko' ? 'active' : '' ?> disabled" data-toggle="tab" href="#profile_risiko" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Profile Risiko</span></a> </li>
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'kajian_risiko' ? 'active' : '' ?> disabled" data-toggle="tab" href="#kajian_risiko" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Kajian Risiko</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'profile_risiko' ? 'active' : '' ?> <?= $profile_risiko->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#profile_risiko" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Profile Risiko</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'kajian_risiko' ? 'active' : '' ?> <?= $kajian_risiko->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#kajian_risiko" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Kajian Risiko</span></a> </li>
                             </ul>
                             <div class="tab-content tabcontent-border">
                                 <!-- profile risiko -->

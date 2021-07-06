@@ -32,6 +32,7 @@
                                 <th>Nama</th>
                                 <th>email</th>
                                 <th>Status</th>
+                                <th>Verfikasi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -44,6 +45,13 @@
                                     <td class="text-dark"><?= $value->nama_depan.' '.$value->nama_belakang ?></td>
                                     <td class="text-dark"><?= $value->email ?></td>
                                     <td class="text-dark"><?= $value->role ?></td>
+                                    <th class="text-dark">
+                                        <?php if($value->role == 'user' && $value->verifikasi == 0){ ?>
+                                            <h1> <i class="fa fa-times-circle text-danger" aria-hidden="true"></i></h1>
+                                        <?php } elseif($value->role == 'user' && $value->verifikasi == 1){ ?>
+                                            <h1> <i class="fa fa-check-circle text-success" aria-hidden="true"></i></h1>
+                                        <?php   }  ?>
+                                    </th>
                                     <td>
                                         <a href="<?= base_url()?>main/proses/user/update/<?=$value->id_user?>" class="btn btn-info btn-sm editData m-1">Update</a>
                                         <button class="btn btn-danger btn-sm m-1 deleteData" data-id="<?= $value->id_user ?>">Delete</button>

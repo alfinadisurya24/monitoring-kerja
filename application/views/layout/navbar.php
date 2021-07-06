@@ -4,10 +4,10 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
                 <!-- Logo icon -->
-                <!-- <b><img src="images/logo.png" alt="homepage" class="dark-logo" /></b> -->
+                <!-- <b><img src="<3?= base_url('assets/images/pln.png') ?>" alt="pln" class="dark-logo w-10" /></b> -->
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                <h3 class="text-dark">Monitoring <br> Pekerjaan</h3>
+                <h3 class="text-dark"><img src="<?= base_url('assets/images/pln.png') ?>" alt="pln" class="dark-logo w-20" /></h3>
             </a>
         </div>
         <!-- End Logo -->

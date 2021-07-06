@@ -58,6 +58,11 @@
                                         <option value="user" <?= $field->role == 'user' ? 'selected' : '' ?>>User</option>
                                     </select>
                                 </div>
+                                <div class="form-check">
+                                    <input id="verifikasi" class="form-check-input" type="checkbox" name="verifikasi" <?= $field->verifikasi == 1 ? 'checked' : '' ?>  value="true">
+                                    <label for="verifikasi" class="form-check-label">Verifikasi</label>
+                                </div>
+                                <br>
                                 <button class="btn btn-primary text-capitalize" type="submit"><?= $action ?></button>
                             <?= form_close(); ?>
                     

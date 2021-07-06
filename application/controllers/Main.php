@@ -107,6 +107,7 @@ class Main extends CI_Controller {
                         $field->nama_belakang   = null;
                         $field->email           = null;
                         $field->role            = null;
+                        $field->verifikasi      = null;
                 }else {
                     $field = $this->General_m->select('user', ['id_user' => $id], 'row');
                 }
@@ -1379,8 +1380,14 @@ class Main extends CI_Controller {
                     'nama_belakang'     => $this->input->post('nama_belakang'),
                     'email'            => $this->input->post('email'),
                     'pass'            => md5($this->input->post('pass')),
-                    'role'         => $this->input->post('role')
+                    'role'       => $this->input->post('role'),
+                    'verifikasi'         => $this->input->post('verifikasi')
                 ];
+                
+                if ($this->input->post('verifikasi') == true) {
+                    $data['verifikasi'] = 1;
+                }
+
             break;
         }
 
@@ -1448,6 +1455,12 @@ class Main extends CI_Controller {
 
                 if ($this->input->post('pass') != '') {
                     $data['pass'] = md5($this->input->post('pass'));
+                }
+
+                if ($this->input->post('verifikasi') == true) {
+                    $data['verifikasi'] = 1;
+                }else{
+                    $data['verifikasi'] = 0;
                 }
             break;
         }
@@ -1550,18 +1563,22 @@ class Main extends CI_Controller {
         if (empty($user)) {
             $this->session->set_flashdata('message', 'Email tidak ditemukan');
         }else {
-            if (md5($password) == $user->pass) {
-                $session = array(
-                    'authenticated_cms' => true,
-                    'id_user'           => $user->id_user,
-                    'email'             => $user->email,
-                    'nama_depan'        => $user->nama_depan,
-                    'nama_belakang'     => $user->nama_belakang,
-                    'role'              => $user->role
-                );
-                $this->session->set_userdata($session);
-            }else {
-                $this->session->set_flashdata('message', 'Password tidak sesuai');
+            if ($user->role == 'user' && $user->verifikasi == 0) {
+                $this->session->set_flashdata('message', 'Email belum diverifikasi oleh Admin');
+            }else{
+                if (md5($password) == $user->pass) {
+                    $session = array(
+                        'authenticated_cms' => true,
+                        'id_user'           => $user->id_user,
+                        'email'             => $user->email,
+                        'nama_depan'        => $user->nama_depan,
+                        'nama_belakang'     => $user->nama_belakang,
+                        'role'              => $user->role
+                    );
+                    $this->session->set_userdata($session);
+                }else {
+                    $this->session->set_flashdata('message', 'Password tidak sesuai');
+                }
             }
         }
         redirect('main');
@@ -1641,4 +1658,21 @@ class Main extends CI_Controller {
         force_download('assets/files/'.$folder.'/'.$file, null);
     }
 
+    // 
+    // Export excel
+    //
+    public function excelPekerjaan()
+    {
+        $tahapan_1 = 'if(rab_id is not null AND tor_id is not null AND tug_id is not null AND justifikasi_id is not null AND ba_id is not null, 18, 0) as tahapan_1';
+        $tahapan_2 = 'if(profile_risiko_id is not null AND profile_risiko_id is not null, 14, 0) as tahapan_2';
+        $tahapan_3 = 'if(kkp_id is not null AND rks_id is not null AND referensi_harga_id is not null AND hpe_id is not null, 16, 0) as tahapan_3';
+        $tahapan_4 = 'if(hps_id is not null AND ba_aanwijzing_id is not null AND cda_id is not null AND perjanjian_id is not null AND jaminan_pelaksanaan_pemeliharaan_id is not null, 16, 0) as tahapan_4';
+        $tahapan_5 = 'if(kick_off_id is not null AND spk_id is not null AND spm_id is not null AND lpp_id is not null AND nrpp_id is not null AND ba_stp_id is not null AND ba_pembayaran_id is not null AND ba_smp_id is not null AND ba_pemeriksaan_id is not null AND amandemen_perjanjian_id is not null AND ba_denda_id is not null AND dokumen_audit_id is not null, 18, 0) as tahapan_5';
+        $tahapan_6 = 'if(pembayaran_id is not null, 18, 0) as tahapan_6';
+        $data = [
+            'getData'   => $this->General_m->select('pekerjaan', [], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6.''),
+        ];   
+
+        $this->load->view('excel_pekerjaan', $data);
+    }
 }

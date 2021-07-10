@@ -48,6 +48,27 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Pie Chart -->
+            <div class="col-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Progress Tahapan Pekerjaan</h4>
+                        </div>
+                    </div>
+                    <input type="hidden" id="belum_sratus" value="<?= $belum_sratus?>">
+                    <input type="hidden" id="sratus_persen" value="<?= $sratus_persen ?>">
+                    <div class="panel-body">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <div class="col-md-3">
         <div class="card bg-danger p-20">
             <div class="media widget-ten">

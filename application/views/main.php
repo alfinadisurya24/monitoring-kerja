@@ -57,7 +57,11 @@
     <!-- <script src="<?#= base_url( 'assets/js/lib/chartist/chartist.min.js') ?>"></script>
     <script src="<?#= base_url( 'assets/js/lib/chartist/chartist-plugin-tooltip.min.js') ?>"></script>
     <script src="<?#= base_url( 'assets/js/lib/chartist/chartist-init.js') ?>"></script> -->
+
+    <script src="<?= base_url( 'assets/js/lib/chart-js/Chart.bundle.js') ?>"></script>
+    <script src="<?= base_url( 'assets/js/lib/chart-js/chartjs-init.js') ?>"></script>
     <!--Custom JavaScript -->
+    <script src="<?= base_url( 'assets/js/custom.min.js') ?>"></script>
 
 </head>
 

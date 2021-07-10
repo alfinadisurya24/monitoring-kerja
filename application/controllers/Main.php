@@ -55,12 +55,36 @@ class Main extends CI_Controller {
                     break;
                 
                 default:
+                    $tahapan_1 = 'if(rab_id is not null AND tor_id is not null AND tug_id is not null AND justifikasi_id is not null AND ba_id is not null, 18, 0) as tahapan_1';
+                    $tahapan_2 = 'if(profile_risiko_id is not null AND profile_risiko_id is not null, 14, 0) as tahapan_2';
+                    $tahapan_3 = 'if(kkp_id is not null AND rks_id is not null AND referensi_harga_id is not null AND hpe_id is not null, 16, 0) as tahapan_3';
+                    $tahapan_4 = 'if(hps_id is not null AND ba_aanwijzing_id is not null AND cda_id is not null AND perjanjian_id is not null AND jaminan_pelaksanaan_pemeliharaan_id is not null, 16, 0) as tahapan_4';
+                    $tahapan_5 = 'if(kick_off_id is not null AND spk_id is not null AND spm_id is not null AND lpp_id is not null AND nrpp_id is not null AND ba_stp_id is not null AND ba_pembayaran_id is not null AND ba_smp_id is not null AND ba_pemeriksaan_id is not null AND amandemen_perjanjian_id is not null AND ba_denda_id is not null AND dokumen_audit_id is not null, 18, 0) as tahapan_5';
+                    $tahapan_6 = 'if(pembayaran_id is not null, 18, 0) as tahapan_6';
+
+                    $sratus_persen = 0;
+                    $belum_sratus   = 0;
+
+                    $getData = $this->General_m->select('pekerjaan', [], 'result', 'id_pekerjaan', 'asc', $tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    
+                    foreach ($getData as $key => $value) {
+                        $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                        if ($progress == 100) {
+                            $sratus_persen += 1;
+                        } else {
+                            $belum_sratus += 1;
+                        }
+                        
+                    }
+
                     $data = [
                         'title'     => 'Dashboard | Monitoring Pekerjaan',
                         'header'    => 'Dashboard',
                         'pekerjaan' => count($this->General_m->select('pekerjaan', [], 'result')),
                         'user'      => count($this->General_m->select('user', [], 'result')),
                         'header'    => 'Dashboard',
+                        'sratus_persen'=> $sratus_persen,
+                        'belum_sratus'  => $belum_sratus,
                         'section'   => 'content/home'
                     ];
                     break;

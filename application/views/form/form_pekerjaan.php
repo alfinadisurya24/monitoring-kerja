@@ -96,23 +96,29 @@
                                                 </div>
                                             <?php } ?>
                                         </div>
+                                        <?php
+                                            $disabled = true;
+                                            if ($rab != null && $tor != null && $tug != null && $ba != null && $justifikasi != null) {
+                                                $disabled = false;
+                                            }
+                                        ?>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
                                             <a href="<?=base_url()?>main/tahapan_v/pengumpulan/<?=$field->id_pekerjaan?>?child=rab" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 1 <br> Pengumpulan <br> Data</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/mro/<?=$field->id_pekerjaan?>?child=profile_risiko" class="btn btn-primary text-white w-100 font-weight-bold <?= empty($ba) && empty($tor) && empty($tug) && empty($justifikasi) && empty($rab) ? "disabled" : ""  ?>">Tahapan 2 <br> MRO (Manajemen Risiko) <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/mro/<?=$field->id_pekerjaan?>?child=profile_risiko" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 2 <br> MRO (Manajemen Risiko) <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/perencanaan_pengadaan/<?=$field->id_pekerjaan?>?child=kkp" class="btn btn-primary text-white w-100 font-weight-bold <?= empty($ba) && empty($tor) && empty($tug) && empty($justifikasi) && empty($rab) ? "disabled" : ""  ?>">Tahapan 3 <br> Perencanaan <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/perencanaan_pengadaan/<?=$field->id_pekerjaan?>?child=kkp" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 3 <br> Perencanaan <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pengadaan/<?=$field->id_pekerjaan?>?child=hps" class="btn btn-primary text-white w-100 font-weight-bold <?= empty($ba) && empty($tor) && empty($tug) && empty($justifikasi) && empty($rab) ? "disabled" : ""  ?>">Tahapan 4 <br> Pelaksanaan <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pengadaan/<?=$field->id_pekerjaan?>?child=hps" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 4 <br> Pelaksanaan <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pekerjaan/<?=$field->id_pekerjaan?>?child=kick_off" class="btn btn-primary text-white w-100 font-weight-bold <?= empty($ba) && empty($tor) && empty($tug) && empty($justifikasi) && empty($rab) ? "disabled" : ""  ?>">Tahapan 5 <br> Pelaksanaan <br> Pekerjaan </a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pekerjaan/<?=$field->id_pekerjaan?>?child=kick_off" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 5 <br> Pelaksanaan <br> Pekerjaan </a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran" class="btn btn-primary text-white w-100 font-weight-bold <?= empty($ba) && empty($tor) && empty($tug) && empty($justifikasi) && empty($rab) ? "disabled" : ""  ?>">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
                                         </div>
                                     </div>
                                 <?php } ?>

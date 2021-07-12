@@ -266,6 +266,11 @@ class Main extends CI_Controller {
                         $justifikasi->upload_cek     = null;
                 }
                 
+                $disabled = true;
+                if ($rab->file_upload != null && $tor->file_upload != null && $tug->file_upload != null && $ba->file_upload != null && $justifikasi->file_upload != null) {
+                    $disabled = false;
+                }
+
                 $data = [
                     'page'      => $type,
                     'title'     => 'Pengumpulan Data | Monitoring Pekerjaan',
@@ -276,6 +281,7 @@ class Main extends CI_Controller {
                     'tug'       => $tug,
                     'ba'        => $ba,
                     'justifikasi'=> $justifikasi,
+                    'disabled'=> $disabled,
                     'section'   => 'form/form_pengumpulan_data'
                 ];
             break;
@@ -301,6 +307,11 @@ class Main extends CI_Controller {
                         $kajian_risiko->upload_cek         = null;
                 }
                 
+                $disabled = true;
+                if ($profile_risiko->file_upload != null && $kajian_risiko->file_upload != null) {
+                    $disabled = false;
+                }
+
                 $data = [
                     'page'      => $type,
                     'title'     => 'MRO Pengadaan | Monitoring Pekerjaan',
@@ -308,6 +319,7 @@ class Main extends CI_Controller {
                     'field'     => $field,
                     'profile_risiko'=> $profile_risiko,
                     'kajian_risiko'=> $kajian_risiko,
+                    'disabled'=> $disabled,
                     'section'   => 'form/form_mro'
                 ];
             break;
@@ -350,7 +362,12 @@ class Main extends CI_Controller {
                         $hpe->file_upload   = null;
                         $hpe->upload_cek    = null;
                 }
-                
+
+                $disabled = true;
+                if ($kkp->file_upload != null && $rks->file_upload != null && $referensi_harga->file_upload != null && $hpe->file_upload != null) {
+                    $disabled = false;
+                }
+
                 $data = [
                     'page'      => $type,
                     'title'     => 'Perencanaan Pengadaan | Monitoring Pekerjaan',
@@ -360,6 +377,7 @@ class Main extends CI_Controller {
                     'rks'       => $rks,
                     'referensi_harga'=> $referensi_harga,
                     'hpe'       => $hpe,
+                    'disabled'=> $disabled,
                     'section'   => 'form/form_perencanaan_pengadaan'
                 ];
             break;
@@ -412,6 +430,11 @@ class Main extends CI_Controller {
                         $jaminan_pelaksanaan_pemeliharaan->upload_cek    = null;
                 }
                 
+                $disabled = true;
+                if ($hps->file_upload != null && $ba_aanwijzing->file_upload != null && $cda->file_upload != null && $perjanjian->file_upload != null && $jaminan_pelaksanaan_pemeliharaan->file_upload != null) {
+                    $disabled = false;
+                }
+
                 $data = [
                     'page'      => $type,
                     'title'     => 'Pelaksanaan Pengadaan | Monitoring Pekerjaan',
@@ -422,6 +445,7 @@ class Main extends CI_Controller {
                     'cda'=> $cda,
                     'perjanjian'       => $perjanjian,
                     'jaminan_pelaksanaan_pemeliharaan'       => $jaminan_pelaksanaan_pemeliharaan,
+                    'disabled'=> $disabled,
                     'section'   => 'form/form_pelaksanaan_pengadaan'
                 ];
             break;
@@ -536,6 +560,12 @@ class Main extends CI_Controller {
                         $dokumen_audit->file_upload   = null;
                         $dokumen_audit->upload_cek    = null;
                 }
+
+                $disabled = true;
+                if ($kick_off->file_upload != null && $spk->file_upload != null && $spm->file_upload != null && $lpp->file_upload != null && $nrpp->file_upload != null && $ba_stp->file_upload != null && $ba_pembayaran->file_upload != null 
+                && $ba_smp->file_upload != null && $ba_pemeriksaan->file_upload != null && $amandemen_perjanjian->file_upload != null && $ba_denda->file_upload != null && $dokumen_audit->file_upload != null) {
+                        $disabled = false;
+                }
                 
                 $data = [
                     'page'      => $type,
@@ -554,6 +584,7 @@ class Main extends CI_Controller {
                     'amandemen_perjanjian'=> $amandemen_perjanjian,
                     'ba_denda'    => $ba_denda,
                     'dokumen_audit'=> $dokumen_audit,
+                    'disabled'=> $disabled,
                     'section'   => 'form/form_pelaksanaan_pekerjaan'
                 ];
             break;
@@ -569,7 +600,7 @@ class Main extends CI_Controller {
                         $pembayaran->file_upload        = null;
                         $pembayaran->upload_cek        = null;
                 }
-            
+
                 $data = [
                     'page'      => $type,
                     'title'     => 'Pelaksanaan Pembayaran | Monitoring Pekerjaan',

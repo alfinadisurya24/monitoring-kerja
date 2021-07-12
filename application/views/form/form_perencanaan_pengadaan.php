@@ -31,10 +31,10 @@
                             <?php } ?>
                             
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'kkp' ? 'active' : '' ?> <?= $kkp->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#kkp" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Kkp</span></a> </li>
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'rks' ? 'active' : '' ?> <?= $rks->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#rks" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Rks</span></a> </li>
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'referensi_harga' ? 'active' : '' ?> <?= $referensi_harga->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#referensi_harga" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Referensi Harga</span></a> </li>
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'hpe' ? 'active' : '' ?> <?= $hpe->file_upload == null ? "disabled" : "" ?>" data-toggle="tab" href="#hpe" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Hpe</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'kkp' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#kkp" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Kkp</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'rks' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#rks" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Rks</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'referensi_harga' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#referensi_harga" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Referensi Harga</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'hpe' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#hpe" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Hpe</span></a> </li>
                             </ul>
                             <div class="tab-content tabcontent-border">
                                 <!-- kkp -->

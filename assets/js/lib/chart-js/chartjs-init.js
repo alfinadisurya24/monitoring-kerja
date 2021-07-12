@@ -18,8 +18,8 @@ window.onload = function() {
 										"rgb(238, 54, 54)"
 									],
 					hoverBackgroundColor: [
-										"rgba(0, 123, 255,0.9)",
-										"rgb(238, 54, 54)"
+										"rgba(0, 123, 255,0.5)",
+										"rgb(238, 54, 54,0.5)"
 									]
 	
 								} ],

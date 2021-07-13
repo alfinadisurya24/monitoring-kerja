@@ -66,7 +66,6 @@ class Main extends CI_Controller {
                     $belum_sratus   = 0;
 
                     $getData = $this->General_m->select('pekerjaan', [], 'result', 'id_pekerjaan', 'asc', $tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
-                    
                     foreach ($getData as $key => $value) {
                         $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
                         if ($progress == 100) {
@@ -75,6 +74,15 @@ class Main extends CI_Controller {
                             $belum_sratus += 1;
                         }
                         
+                    }
+                    $cek_sratus = 0;
+                    $datePlus = date("Y-m-d", strtotime("+7 day"));
+                    $esitmasi_date = $this->General_m->select('pekerjaan', ["finish_date" => $datePlus], 'result', 'id_pekerjaan', 'asc', $tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    foreach ($esitmasi_date as $key => $value) {
+                        $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                        if ($progress != 100) {
+                            $cek_sratus += 1;
+                        }
                     }
 
                     $data = [
@@ -85,6 +93,8 @@ class Main extends CI_Controller {
                         'header'    => 'Dashboard',
                         'sratus_persen'=> $sratus_persen,
                         'belum_sratus'  => $belum_sratus,
+                        'esitmasi_date'  => $esitmasi_date,
+                        'cek_sratus'  => $cek_sratus,
                         'section'   => 'content/home'
                     ];
                     break;
@@ -138,7 +148,7 @@ class Main extends CI_Controller {
                 $data = [
                     'page'      => $type,
                     'title'     => 'User | Monitoring Pekerjaan',
-                    'header'     => ucfirst($action) .' Pengumpulan Data',
+                    'header'     => ucfirst($action) .' User',
                     'action'    => $action,
                     'field'     => $field,
                     'section'   => 'form/form_user'

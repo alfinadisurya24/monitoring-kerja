@@ -44,7 +44,7 @@
                                         <input type="hidden" name="id" value="<?= $rab->id_rab ?>">
                                         <div class="form-group">
                                             <label>Nomor Rab</label>
-                                            <input type="number" class="form-control" name="no" value="<?= $rab->no_rab ?>" placeholder="* nomor rab" required>
+                                            <input type="text" class="form-control" name="no" value="<?= $rab->no_rab ?>" placeholder="* nomor rab" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
@@ -76,7 +76,7 @@
                                         <input type="hidden" name="id" value="<?= $tor->id_tor ?>">
                                         <div class="form-group">
                                             <label>Nomor Tor</label>
-                                            <input type="number" class="form-control" name="no" value="<?= $tor->no_tor ?>" placeholder="* nomor tor" required>
+                                            <input type="text" class="form-control" name="no" value="<?= $tor->no_tor ?>" placeholder="* nomor tor" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
@@ -108,7 +108,7 @@
                                         <input type="hidden" name="id" value="<?= $tug->id_tug ?>">
                                         <div class="form-group">
                                             <label>Nomor Tug</label>
-                                            <input type="number" class="form-control" name="no" value="<?= $tug->no_tug ?>" placeholder="* nomor tug" required>
+                                            <input type="text" class="form-control" name="no" value="<?= $tug->no_tug ?>" placeholder="* nomor tug" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
@@ -160,7 +160,7 @@
                                         <input type="hidden" name="id" value="<?= $ba->id_ba ?>">
                                         <div class="form-group">
                                             <label>Nomor Berita Acara</label>
-                                            <input type="number" class="form-control" name="no" value="<?= $ba->no_ba ?>" placeholder="* nomor berita acara" required>
+                                            <input type="text" class="form-control" name="no" value="<?= $ba->no_ba ?>" placeholder="* nomor berita acara" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>

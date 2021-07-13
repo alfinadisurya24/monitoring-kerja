@@ -9,6 +9,15 @@
     </div>
 </div>
 <div class="row">
+
+    <?php if (!empty($esitmasi_date) && $cek_sratus != 0) { ?>
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Harap lengkapi dokumen karena sudah melewati H-7 !</strong>
+            </div>
+        </div>
+    <?php } ?>
     <div class="col-md-6">
         <div class="card bg-primary p-20">
             <div class="media widget-ten">

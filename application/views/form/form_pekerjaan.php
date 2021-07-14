@@ -97,28 +97,44 @@
                                             <?php } ?>
                                         </div>
                                         <?php
-                                            $disabled = true;
+                                            $disabled1 = true;
+                                            $disabled2 = true;
+                                            $disabled3 = true;
+                                            $disabled4 = true;
+                                            $disabled5 = true;
                                             if ($rab != null && $tor != null && $tug != null && $ba != null && $justifikasi != null) {
-                                                $disabled = false;
+                                                $disabled1 = false;
+                                            }
+                                            if ($profile_risiko != null && $kajian_risiko != null) {
+                                                $disabled2 = false;
+                                            }
+                                            if ($kkp != null && $rks != null && $referensi_harga != null && $hpe != null) {
+                                                $disabled3 = false;
+                                            }
+                                            if ($hps != null && $ba_aanwijzing != null && $cda != null && $perjanjian != null && $jaminan_pelaksanaan_pemeliharaan != null) {
+                                                $disabled4 = false;
+                                            }
+                                            if ($kick_off != null && $spk != null && $spm != null && $lpp != null && $nrpp != null && $ba_stp != null && $ba_pembayaran != null && $ba_smp != null && $ba_pemeriksaan != null && $amandemen_perjanjian != null && $ba_denda != null && $dokumen_audit != null) {
+                                                $disabled5 = false;
                                             }
                                         ?>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pengumpulan/<?=$field->id_pekerjaan?>?child=rab" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 1 <br> Pengumpulan <br> Data</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pengumpulan/<?=$field->id_pekerjaan?>?child=ba" class="btn btn-primary text-white w-100 font-weight-bold">Tahapan 1 <br> Pengumpulan <br> Data</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/mro/<?=$field->id_pekerjaan?>?child=profile_risiko" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 2 <br> MRO (Manajemen Risiko) <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/mro/<?=$field->id_pekerjaan?>?child=profile_risiko" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled1 == true ? "disabled" : ""  ?>">Tahapan 2 <br> MRO (Manajemen Risiko) <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/perencanaan_pengadaan/<?=$field->id_pekerjaan?>?child=kkp" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 3 <br> Perencanaan <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/perencanaan_pengadaan/<?=$field->id_pekerjaan?>?child=kkp" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled2 == true ? "disabled" : ""  ?>">Tahapan 3 <br> Perencanaan <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pengadaan/<?=$field->id_pekerjaan?>?child=hps" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 4 <br> Pelaksanaan <br> Pengadaan</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pengadaan/<?=$field->id_pekerjaan?>?child=hps" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled3 == true ? "disabled" : ""  ?>">Tahapan 4 <br> Pelaksanaan <br> Pengadaan</a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pekerjaan/<?=$field->id_pekerjaan?>?child=kick_off" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 5 <br> Pelaksanaan <br> Pekerjaan </a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pelaksanaan_pekerjaan/<?=$field->id_pekerjaan?>?child=kick_off" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled4 == true ? "disabled" : ""  ?>">Tahapan 5 <br> Pelaksanaan <br> Pekerjaan </a>
                                         </div>
                                         <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled == true ? "disabled" : ""  ?>">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
+                                            <a href="<?=base_url()?>main/tahapan_v/pembayaran/<?=$field->id_pekerjaan?>?child=pembayaran" class="btn btn-primary text-white w-100 font-weight-bold <?= $disabled5 == true ? "disabled" : ""  ?>">Tahapan 6 <br> Pelaksanaan <br> Pembayaran</a>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -197,10 +213,6 @@
                                     <div class="col-2 col-sm-2 col-md-2 col-lg-2">
                                         <?php if (!empty($kick_off)) { ?>
                                             <a href="<?= base_url()?>main/downloadPdf/<?= $kick_off->file_upload ?>"><img src="/assets/images/pdf.png" width="50" alt="pdf">File Kick Off</a>
-                                        <?php } ?>
-                                        <?php if (!empty($ba_aanwijzing)) { ?>
-                                            <br><br>                                   
-                                            <a href="<?= base_url()?>main/downloadPdf/<?= $ba_aanwijzing->file_upload ?>"><img src="/assets/images/pdf.png" width="50" alt="pdf"> File Berita Acara Aanwijzing </a>
                                         <?php } ?>
                                         <?php if (!empty($spk)) { ?>
                                             <br><br>                                   

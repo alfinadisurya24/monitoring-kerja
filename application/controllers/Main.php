@@ -75,15 +75,17 @@ class Main extends CI_Controller {
                         }
                         
                     }
-                    $cek_sratus = 0;
-                    $datePlus = date("Y-m-d", strtotime("+7 day"));
-                    $esitmasi_date = $this->General_m->select('pekerjaan', ["finish_date" => $datePlus], 'result', 'id_pekerjaan', 'asc', $tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
-                    foreach ($esitmasi_date as $key => $value) {
-                        $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
-                        if ($progress != 100) {
-                            $cek_sratus += 1;
-                        }
-                    }
+
+                    $datePlusSeminggu = date("Y-m-d", strtotime("+7 day"));
+                    $datePlusSebulan = date("Y-m-d", strtotime("+1 month"));
+                    $datePlus3Bulan = date("Y-m-d", strtotime("+3 month"));
+                    $datePlus6Bulan = date("Y-m-d", strtotime("+6 month"));
+                    $datePlusSetahun = date("Y-m-d", strtotime("+1 year"));
+                    $per_minggu = $this->General_m->select('pekerjaan', ["finish_date" => $datePlusSeminggu], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    $per_bulan = $this->General_m->select('pekerjaan', ["finish_date" => $datePlusSebulan], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    $per_3bulan = $this->General_m->select('pekerjaan', ["finish_date" => $datePlus3Bulan], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    $per_6bulan = $this->General_m->select('pekerjaan', ["finish_date" => $datePlus6Bulan], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
+                    $per_tahun = $this->General_m->select('pekerjaan', ["finish_date" => $datePlusSetahun], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6);
 
                     $data = [
                         'title'     => 'Dashboard | Monitoring Pekerjaan',
@@ -93,8 +95,11 @@ class Main extends CI_Controller {
                         'header'    => 'Dashboard',
                         'sratus_persen'=> $sratus_persen,
                         'belum_sratus'  => $belum_sratus,
-                        'esitmasi_date'  => $esitmasi_date,
-                        'cek_sratus'  => $cek_sratus,
+                        'per_minggu'    => $per_minggu,
+                        'per_bulan'    => $per_bulan,
+                        'per_3bulan'    => $per_3bulan,
+                        'per_6bulan'    => $per_6bulan,
+                        'per_tahun'    => $per_tahun,
                         'section'   => 'content/home'
                     ];
                     break;
@@ -277,7 +282,11 @@ class Main extends CI_Controller {
                 }
                 
                 $disabled = true;
-                if ($rab->file_upload != null && $tor->file_upload != null && $tug->file_upload != null && $ba->file_upload != null && $justifikasi->file_upload != null) {
+                if (($rab->file_upload != null && $rab->upload_cek == 1) 
+                && ($tor->file_upload != null && $tor->upload_cek == 1) 
+                && ($tug->file_upload != null && $tug->upload_cek == 1) 
+                && ($ba->file_upload != null && $ba->upload_cek == 1) 
+                && ($justifikasi->file_upload != null && $justifikasi->upload_cek == 1)) {
                     $disabled = false;
                 }
 
@@ -318,7 +327,8 @@ class Main extends CI_Controller {
                 }
                 
                 $disabled = true;
-                if ($profile_risiko->file_upload != null && $kajian_risiko->file_upload != null) {
+                if (($profile_risiko->file_upload != null && $profile_risiko->upload_cek == 1) 
+                && ($kajian_risiko->file_upload != null && $kajian_risiko->upload_cek == 1)) {
                     $disabled = false;
                 }
 
@@ -374,7 +384,10 @@ class Main extends CI_Controller {
                 }
 
                 $disabled = true;
-                if ($kkp->file_upload != null && $rks->file_upload != null && $referensi_harga->file_upload != null && $hpe->file_upload != null) {
+                if (($kkp->file_upload != null && $kkp->upload_cek == 1) 
+                && ($rks->file_upload != null && $rks->upload_cek == 1) 
+                && ($referensi_harga->file_upload != null && $referensi_harga->upload_cek == 1) 
+                && ($hpe->file_upload != null && $hpe->upload_cek == 1)) {
                     $disabled = false;
                 }
 
@@ -441,7 +454,11 @@ class Main extends CI_Controller {
                 }
                 
                 $disabled = true;
-                if ($hps->file_upload != null && $ba_aanwijzing->file_upload != null && $cda->file_upload != null && $perjanjian->file_upload != null && $jaminan_pelaksanaan_pemeliharaan->file_upload != null) {
+                if (($hps->file_upload != null && $hps->upload_cek == 1) 
+                && ($ba_aanwijzing->file_upload != null && $ba_aanwijzing->upload_cek == 1) 
+                && ($cda->file_upload != null && $cda->upload_cek == 1) 
+                && ($perjanjian->file_upload != null && $perjanjian->upload_cek == 1) 
+                && ($jaminan_pelaksanaan_pemeliharaan->file_upload != null && $jaminan_pelaksanaan_pemeliharaan->upload_cek == 1)) {
                     $disabled = false;
                 }
 
@@ -572,8 +589,18 @@ class Main extends CI_Controller {
                 }
 
                 $disabled = true;
-                if ($kick_off->file_upload != null && $spk->file_upload != null && $spm->file_upload != null && $lpp->file_upload != null && $nrpp->file_upload != null && $ba_stp->file_upload != null && $ba_pembayaran->file_upload != null 
-                && $ba_smp->file_upload != null && $ba_pemeriksaan->file_upload != null && $amandemen_perjanjian->file_upload != null && $ba_denda->file_upload != null && $dokumen_audit->file_upload != null) {
+                if (($kick_off->file_upload != null && $kick_off->upload_cek == 1) 
+                && ($spk->file_upload != null && $spk->upload_cek == 1) 
+                && ($spm->file_upload != null && $spm->upload_cek == 1) 
+                && ($lpp->file_upload != null && $lpp->upload_cek == 1)
+                && ($nrpp->file_upload != null && $nrpp->upload_cek == 1) 
+                && ($ba_stp->file_upload != null && $ba_stp->upload_cek == 1) 
+                && ($ba_pembayaran->file_upload != null && $ba_pembayaran->upload_cek == 1) 
+                && ($ba_smp->file_upload != null && $ba_smp->upload_cek == 1) 
+                && ($ba_pemeriksaan->file_upload != null && $ba_pemeriksaan->upload_cek == 1) 
+                && ($amandemen_perjanjian->file_upload != null && $amandemen_perjanjian->upload_cek == 1) 
+                && ($ba_denda->file_upload != null && $ba_denda->upload_cek == 1) 
+                && ($dokumen_audit->file_upload != null && $dokumen_audit->upload_cek == 1)) {
                         $disabled = false;
                 }
                 
@@ -716,7 +743,9 @@ class Main extends CI_Controller {
 
             case 'ba':
                 $table = "ba";
-                $next = false;
+                $next = true;
+                $tahapan = 'pengumpulan';
+                $nextFor = "rab";
                 $data = [
                     'no_ba'    => $this->input->post('no'),
                     'tanggal'   => $this->input->post('tanggal'),
@@ -741,9 +770,7 @@ class Main extends CI_Controller {
 
             case 'justifikasi':
                 $table = "justifikasi";
-                $next = true;
-                $tahapan = 'pengumpulan';
-                $nextFor = "ba";
+                $next = false;
                 $data = [
                     'jasa'   => $this->input->post('jasa'),
                     'upload_cek'=> $this->input->post('upload_cek')

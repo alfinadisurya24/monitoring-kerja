@@ -31,11 +31,11 @@
                             <?php } ?>
                             
                             <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'ba' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#ba" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Berita Acara</span></a> </li>
                                 <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'rab' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#rab" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Rab</span></a> </li>
                                 <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'tor' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#tor" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Tor</span></a> </li>
                                 <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'tug' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#tug" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Tug</span></a> </li>
                                 <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'justifikasi' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#justifikasi" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Justifikasi</span></a> </li>
-                                <li class="nav-item"> <a class="nav-link <?= $_GET['child'] == 'ba' ? 'active' : '' ?> <?= $disabled == true ? "disabled" : "" ?>" data-toggle="tab" href="#ba" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Berita Acara</span></a> </li>
                             </ul>
                             <div class="tab-content tabcontent-border">
                                 <!-- rab -->
@@ -150,7 +150,7 @@
                                                 <option value="1" <?= $justifikasi->upload_cek ? 'selected' : '' ?>>Sudah dicek</option>
                                             </select>
                                         </div>
-                                        <button class="btn btn-primary text-capitalize" type="submit">Next</button>
+                                        <button class="btn btn-primary text-capitalize" type="submit">Submit</button>
                                     <?= form_close(); ?>
                                 </div>
 
@@ -178,7 +178,7 @@
                                                 <option value="1" <?= $ba->upload_cek ? 'selected' : '' ?>>Sudah dicek</option>
                                             </select>
                                         </div>
-                                        <button class="btn btn-primary text-capitalize" type="submit">Submit</button>
+                                        <button class="btn btn-primary text-capitalize" type="submit">Next</button>
                                     <?= form_close(); ?>
                                 </div>
                             

@@ -8,16 +8,72 @@
         </ol>
     </div>
 </div>
-<div class="row">
+<div class="row position-relative">
 
-    <?php if (!empty($esitmasi_date) && $cek_sratus != 0) { ?>
-        <div class="col-12">
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Harap lengkapi dokumen karena sudah melewati H-7 !</strong>
-            </div>
-        </div>
-    <?php } ?>
+    <div class="col-12" style="height: 200px;width: 100%;overflow:auto;">
+        <?php if (!empty($per_minggu)) { ?>
+            <?php foreach ($per_minggu as $key => $value) { ?>
+                <?php 
+                    $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                    if ($progress == 100) { continue; } 
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Harap lengkapi dokumen dengan nama pekerjaan <?= $value->nama_pekerjaan  ?> karena sudah melewati H-7 !</strong>
+                </div>
+            <?php } ?>
+        <?php } ?>
+        <?php if (!empty($per_bulan)) { ?>
+            <?php foreach ($per_bulan as $key => $value) { ?>
+                <?php 
+                    $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                    if ($progress == 100) { continue; } 
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Harap lengkapi dokumen dengan nama pekerjaan <?= $value->nama_pekerjaan  ?> karena sudah melewati H-1 Bulan !</strong>
+                </div>
+            <?php } ?>
+        <?php } ?>
+        <?php if (!empty($per_3bulan)) { ?>
+            <?php foreach ($per_3bulan as $key => $value) { ?>
+                <?php 
+                    $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                    if ($progress == 100) { continue; } 
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Harap lengkapi dokumen dengan nama pekerjaan <?= $value->nama_pekerjaan  ?> karena sudah melewati H-3 Bulan !</strong>
+                </div>
+            <?php } ?>
+        <?php } ?>
+        <?php if (!empty($per_6bulan)) { ?>
+            <?php foreach ($per_6bulan as $key => $value) { ?>
+                <?php 
+                    $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                    if ($progress == 100) { continue; } 
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Harap lengkapi dokumen dengan nama pekerjaan <?= $value->nama_pekerjaan  ?> karena sudah melewati H-6 Bulan !</strong>
+                </div>
+            <?php } ?>
+        <?php } ?>
+        <?php if (!empty($per_tahun)) { ?>
+            <?php foreach ($per_tahun as $key => $value) { ?>
+                <?php 
+                    $progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
+                    if ($progress == 100) { continue; } 
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Harap lengkapi dokumen dengan nama pekerjaan <?= $value->nama_pekerjaan  ?> karena sudah melewati H-1 Tahun !</strong>
+                </div>
+            <?php } ?>
+        <?php } ?>
+    </div>
+
+
     <div class="col-md-6">
         <div class="card bg-primary p-20">
             <div class="media widget-ten">

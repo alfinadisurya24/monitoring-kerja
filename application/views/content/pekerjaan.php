@@ -25,7 +25,7 @@
                             <a class="btn btn-md btn-primary ml-auto"
                                 href="<?=base_url()?>main/proses/pekerjaan/create"><i class="fa fa-plus"></i>
                                 Create</a>
-                            <a class="btn btn-md text-danger ml-auto" style="background-color:white;border:solid 1px red;" href="<?=base_url()?>main/excelPekerjaan"><i
+                            <a class="btn btn-md text-danger ml-auto pdf" style="background-color:white;border:solid 1px red;" href="<?=base_url()?>main/excelPekerjaan"><i
                                     class="fa fa-file"></i> Download Pekerjaan</a>
                         </div>
                         <div class="card-body">

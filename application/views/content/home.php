@@ -90,7 +90,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-md text-danger ml-auto" style="background-color:white;border:solid 1px red;"
+                <a class="btn btn-md text-danger ml-auto pdf" style="background-color:white;border:solid 1px red;"
                     href="<?=base_url()?>main/generatePdf"><i class="fa fa-file"></i> Download Pekerjaan</a>
             </div>
             <div class="card-body">
@@ -159,34 +159,34 @@
             </div>                                            
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-5 col-md-3">
                         Pekerjaan
                     </div>
-                    <div class="col-9">
+                    <div class="col-7 col-md-9">
                         : <span id="pekerjaan"></span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-5 col-md-3">
                         Tanggal
                     </div>
-                    <div class="col-9">
+                    <div class="col-7 col-md-9">
                         : <span id="tanggal"></span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-5 col-md-3">
                         Jam
                     </div>
-                    <div class="col-9">
+                    <div class="col-7 col-md-9">
                         : <span id="jam"></span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-5 col-md-3">
                         Status
                     </div>
-                    <div class="col-9">
+                    <div class="col-7 col-md-9">
                         : <span id="status"></span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-5 col-md-3">
                         Keterangan
                     </div>
-                    <div class="col-9">
+                    <div class="col-7 col-md-9">
                         : <span id="keterangan"></span>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
                     }
                     var foto = (value.foto).split(';');
                     for (let index = 0; index < foto.length; index++) {
-                        $("#fotos").append('<div class="col-4"><img class="img-fluid" src="<?= base_url()?>uploads/images/'+foto[index]+'" alt=""></div>');
+                        $("#fotos").append('<div class="col-6 col-md-4"><img class="img-fluid" src="<?= base_url()?>uploads/images/'+foto[index]+'" alt=""></div>');
                     }
                 }
             });

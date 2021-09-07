@@ -6814,6 +6814,9 @@ tbody tr td:last-child {
   .footer {
     left: 0;
   }
+  .pdf{
+    font-size: 11px;
+  }
 }
 /*  8 - media screen and (max-width: 680px) End
 ---------------------------------------------------------------------- */
@@ -6846,6 +6849,9 @@ tbody tr td:last-child {
   }
   .footer {
     left: 0;
+  }
+  .pdf{
+    font-size: 11px;
   }
 }
 /*  9 - media screen and (max-width: 360px) End
@@ -6906,6 +6912,9 @@ tbody tr td:last-child {
   }
   .footer {
     left: 0;
+  }
+  .pdf{
+    font-size: 11px;
   }
 }
 /*  10 - media screen and (max-width: 320px)

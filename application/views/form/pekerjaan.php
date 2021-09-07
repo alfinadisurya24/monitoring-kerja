@@ -7,7 +7,7 @@
             <div class="col-md-7 align-self-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/main/index/data-pekerjaan">Data Pekerjaan</a></li>
+                    <li class="breadcrumb-item"><a href="/main/index/pekerjaan">Pekerjaan</a></li>
                     <li class="breadcrumb-item active"><?= ucfirst($action) ?></li>
                 </ol>
             </div>
@@ -24,7 +24,6 @@
                             <!-- Form -->
                         <!-- </div> -->
                         <div class="card-body">
-                            
                             <?php if ($this->session->flashdata('message')) {?>
                                 <div class="alert alert-<?= $this->session->flashdata('alert');?>">
                                 <?= $this->session->flashdata('message');?>
@@ -33,23 +32,34 @@
                             <?= form_open_multipart('main/'.$action.'/'.$page.'');?>
                                 <input type="hidden" name="id" value="<?= $field->id ?>">
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" name="username" value="<?= $field->username ?>" placeholder="* Username" required>
+                                    <label>Pekerjaan</label>
+                                    <input type="text" class="form-control" name="pekerjaan" value="<?= $field->pekerjaan ?>" placeholder="* pekerjaan" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Perbarui PIN</label> <small>* Nilai pin harus tediri dari 6 angka</small>
-                                    <input type="password" class="form-control" name="pin" placeholder="* pin" maxlength="6" pattern="[0-9]{6}">
+                                    <label>Tanggal</label>
+                                    <input type="date" class="form-control" name="tanggal" value="<?= $field->tanggal ?>" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Konfirmasi PIN</label>
-                                    <input type="password" class="form-control" name="pin_confirm" placeholder="* konfirmasi pin" maxlength="6" pattern="[0-9]{6}">
+                                    <label>Jam</label>
+                                    <input type="time" class="form-control" name="jam" value="<?= $field->jam ?>" placeholder="* jam" required>
                                 </div>
-                                <br>
+                                <?php if ($action == 'update') {?>
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select id="status" class="form-control" name="status">
+                                            <option value="" disabled selected>-- Pilih Status --</option>
+                                            <option value="selesai" <?= $field->status == 'selesai' ? 'selected' : '' ?>>Selesai</option>
+                                            <option value="tidak selesai" <?= $field->status == 'tidak selesai' ? 'selected' : '' ?>>Tidak Selesai</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <textarea name="keterangan" id="keterangan" class="form-control"  rows="5" placeholder="* keterangan" style="height:100px;"><?= $field->keterangan ?></textarea>
+                                    </div>
+                                <?php } ?>
                                 <button class="btn btn-primary text-capitalize" type="submit"><?= $action ?></button>
                             <?= form_close(); ?>
-                    
                         </div>
-                        
                     </div>
                 </div>
             </div>

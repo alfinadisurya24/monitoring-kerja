@@ -16,12 +16,11 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                            <?php if ($this->session->flashdata('message')) {?>
-                                <div class="alert alert-<?= $this->session->flashdata('alert');?>">
-                                <?= $this->session->flashdata('message');?>
-                                </div>
-                            <?php } ?>
-                        <a class="btn btn-md btn-primary ml-auto" href="<?=base_url()?>main/proses/user/create"><i class="fa fa-plus"></i> Create</a>
+                        <?php if ($this->session->flashdata('message')) {?>
+                            <div class="alert alert-<?= $this->session->flashdata('alert');?>">
+                            <?= $this->session->flashdata('message');?>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive">
@@ -29,10 +28,7 @@
                         <thead>                                 
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Nama</th>
-                                <th>email</th>
-                                <th>Status</th>
-                                <th>Verfikasi</th>
+                                <th>Username</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,19 +38,9 @@
                                 foreach ($getData as $key => $value) { ?>
                                 <tr>
                                     <td><?= $i++ ?></td>
-                                    <td class="text-dark"><?= $value->nama_depan.' '.$value->nama_belakang ?></td>
-                                    <td class="text-dark"><?= $value->email ?></td>
-                                    <td class="text-dark"><?= $value->role ?></td>
-                                    <th class="text-dark">
-                                        <?php if($value->role == 'user' && $value->verifikasi == 0){ ?>
-                                            <h1> <i class="fa fa-times-circle text-danger" aria-hidden="true"></i></h1>
-                                        <?php } elseif($value->role == 'user' && $value->verifikasi == 1){ ?>
-                                            <h1> <i class="fa fa-check-circle text-success" aria-hidden="true"></i></h1>
-                                        <?php   }  ?>
-                                    </th>
+                                    <td class="text-dark"><?= $value->username ?></td>
                                     <td>
-                                        <a href="<?= base_url()?>main/proses/user/update/<?=$value->id_user?>" class="btn btn-info btn-sm editData m-1">Update</a>
-                                        <button class="btn btn-danger btn-sm m-1 deleteData" data-id="<?= $value->id_user ?>">Delete</button>
+                                        <a href="<?= base_url()?>main/proses/user/update/<?=$value->id?>" class="btn btn-info btn-sm editData m-1">Update</a>
                                     </td>
                                 </tr>
                             <?php } ?>                             

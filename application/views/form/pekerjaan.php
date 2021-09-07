@@ -47,16 +47,40 @@
                                     <div class="form-group">
                                         <label for="status">Status</label>
                                         <select id="status" class="form-control" name="status">
-                                            <option value="" disabled selected>-- Pilih Status --</option>
-                                            <option value="selesai" <?= $field->status == 'selesai' ? 'selected' : '' ?>>Selesai</option>
                                             <option value="tidak selesai" <?= $field->status == 'tidak selesai' ? 'selected' : '' ?>>Tidak Selesai</option>
+                                            <option value="selesai" <?= $field->status == 'selesai' ? 'selected' : '' ?>>Selesai</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Keterangan</label>
                                         <textarea name="keterangan" id="keterangan" class="form-control"  rows="5" placeholder="* keterangan" style="height:100px;"><?= $field->keterangan ?></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Upload</label>
+                                        <input type="file" class="form-control" name="imagesUpload[]" multiple/>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                                <small>Gambar Sebelumnya :</small>
+                                            </div>
+                                            <?php 
+                                            $gambar = explode(';', $field->foto);
+                                            for ($i=0; $i < count($gambar) ; $i++) { ?>
+                                                <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                                                    <img class="img-fluid" src="<?= base_url('uploads/images/'. $gambar[$i]) ?>" alt="<?= $gambar[$i] ?>">
+                                                </div>
+                                            <?php } ?>
+                                        </div>				
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label>Upload File PDF</label>
+                                        <input type="file" class="form-control" name="uploadPdf" placeholder="* upload file" >
+                                        <?php if (!empty($field->file_pdf)) { ?>
+                                            <a href="<?= base_url()?>main/downloadPdf/<?= $field->file_pdf ?>"><img src="/assets/images/pdf.png" width="50" alt="pdf">Download File PDF</a>
+                                        <?php } ?>
+                                    </div> 
                                 <?php } ?>
+                                <br>
                                 <button class="btn btn-primary text-capitalize" type="submit"><?= $action ?></button>
                             <?= form_close(); ?>
                         </div>

@@ -19,7 +19,7 @@
                 </div>
                 <div class="media-body media-text-right">
                     <h2 class="color-white"><?= $jumlah_pekerjaan ?></h2>
-                    <p class="m-b-0">Jumlah Seluruh Pekerjaan</p>
+                    <p class="m-b-0">Jumlah seluruh pekerjaan hari ini</p>
                 </div>
             </div>
         </div>
@@ -90,8 +90,19 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-md text-danger ml-auto pdf" style="background-color:white;border:solid 1px red;"
-                    href="<?=base_url()?>main/generatePdf"><i class="fa fa-file"></i> Download Pekerjaan</a>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mb-0">Download File PDF :</p>
+                        <small class="text-danger" id="notice">Tanggal harus diisi !</small>
+                    </div>    
+                    <div class="col-9 col-md-2 pl-2 pr-0">
+                        <input class="form-control" type="date" id="filterTanggal">
+                    </div>
+                    <div class="col-3 col-md-1 pl-0">
+                        <a id="downloadPdf" class="btn text-white bg-danger ml-auto pdf"><i class="fa fa-download" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -123,20 +134,9 @@
                                     <?php } ?>
                                 </td>
                                 <td class="text-dark"><?= $value->keterangan ?></td>
-                                <!-- <td class="text-dark">
-                                        <?#php
-                                        #$progress = $value->tahapan_1 + $value->tahapan_2 + $value->tahapan_3 + $value->tahapan_4 + $value->tahapan_5 + $value->tahapan_6;
-                                        #if ($progress == 100) { ?>
-                                            <div class="bg-success border-rounded text-center pt-1 pb-1 pl-2 pr-2">
-                                                <strong>Completed</strong> (<?#= $progress ?>%)
-                                            </div>
-                                        <?#php }else{ ?>
-                                            <div class="bg-warning border-rounded text-center pt-1 pb-1 pl-2 pr-2">
-                                                <strong>On Progress</strong> (<?#= $progress ?>%)
-                                            </div>
-                                        <?#php } ?>
-                                    </td> -->
                                 <td>
+                                    <a href="<?= base_url()?>main/userDashboard/pekerjaan/update/<?=$value->id?>"
+                                        class="btn btn-info btn-sm editData m-1">Update</a>
                                     <button class="btn btn-success btn-sm m-1 detail"
                                         data-id="<?= $value->id ?>" data-base="<?= base_url(); ?>">Detail</button>
                                 </td>
@@ -212,6 +212,7 @@
     </div>
 </div>
 
+<input type="text" value="<?= base_url()?>" id="base" hidden>
 <script>
     $(document).ready(function () {
         // show modal delete data
@@ -238,6 +239,17 @@
                     }
                 }
             });
+        });
+
+        $("#filterTanggal").change(function () {
+            $("#downloadPdf").removeAttr("href");
+            if (!$(this).val()) {
+                $("#downloadPdf").removeAttr("href");
+                $("#notice").text("Tanggal harus diisi !");
+            } else {
+                $("#notice").text("");
+                $("#downloadPdf").attr("href", $("#base").val()+"main/generatePdf/"+$(this).val());
+            }  
         });
     });
 </script>

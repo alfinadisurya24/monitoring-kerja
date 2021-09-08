@@ -45,7 +45,7 @@
                             'header'    => 'Dashboard',
                             'getData'   => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d')], 'result', 'tanggal', 'desc'),
                             'sukses'    => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d'), 'status' => 'selesai'], 'num_rows', 'tanggal', 'desc'),
-                            'jumlah_pekerjaan'   => $this->General_m->select('pekerjaan', [], 'num_rows', 'tanggal', 'desc'),
+                            'jumlah_pekerjaan'   => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d')], 'num_rows', 'tanggal', 'desc'),
                             'section'   => 'content/home'
                         ];
                         break;
@@ -98,6 +98,23 @@
                         'action'    => $action,
                         'field'     => $field,
                         'section'   => 'form/pekerjaan'
+                    ];
+                    break;
+            }
+            $this->load->view('main', $data);
+        }
+
+        public function userDashboard($type = NULL, $action = NULL, $id = NULL) {
+            switch ($type) {
+                case 'pekerjaan':
+                    $field = $this->General_m->select('pekerjaan', ['id' => $id], 'row');
+                    $data = [
+                        'page'      => $type,
+                        'title'     => 'Pekerjaan | Monitoring Pekerjaan',
+                        'header'     => ucfirst($action) .' Pekerjaan',
+                        'action'    => $action,
+                        'field'     => $field,
+                        'section'   => 'form/pekerjaan_dashboard'
                     ];
                     break;
             }
@@ -218,6 +235,52 @@
                     ]);
             }
             redirect('main/index/'.$type.'');
+        }
+
+        public function updateDashboard($type = null){
+            switch ($type) {
+                case 'pekerjaan':
+                    $table = "pekerjaan" ;
+                    $where = ['id' => $this->input->post('id')];
+                    $data = [
+                        'pekerjaan'    => $this->input->post('pekerjaan'),
+                        'tanggal'     => $this->input->post('tanggal'),
+                        'jam'            => $this->input->post('jam'),
+                        'status'          => $this->input->post('status'),
+                        'keterangan'       => $this->input->post('keterangan')
+                    ];
+        
+                    if (!empty($_FILES['imagesUpload']['name'][0])) {
+                        $get = $this->General_m->select('pekerjaan', $where, 'row');
+                        $gambar = explode(';', $get->foto);
+                        for ($i=0; $i < count($gambar) ; $i++) { 
+                            $fileSource     = './uploads/images/'. $gambar[$i];
+                            if (file_exists($fileSource) && $gambar[$i] != NULL) {
+                                unlink($fileSource);
+                            }
+                        }
+                        $data['foto'] = $this->imagesUpload();
+                    }
+
+                    if (!empty($_FILES['uploadPdf']['name'])) {
+                        $data['file_pdf'] = $this->filesUpload('uploadPdf', 'file_pdf', 'UploadUpdate', 'update', 'pekerjaan' , 'id');
+                    }
+                    
+                break; 
+            }
+            
+            if ($this->General_m->update($table, $data, $where)) {
+                $this->session->set_flashdata([
+                    'alert'     => 'success',
+                    'message'   => '<strong>Update Sukses <i class="fa fa-check-circle"></i></strong>',
+                    ]);
+            }else {
+                $this->session->set_flashdata([
+                    'alert'     => 'danger',
+                    'message'   => '<strong>Update Gagal <i class="fa fa-times-circle"></i></strong>',
+                    ]);
+            }
+            redirect('/');
         }
 
         /*
@@ -441,10 +504,10 @@
 
         public function generatePdf($tanggal = null)
         {
-            $tgl = date('Y-m-d');
+            // $tgl = date('Y-m-d');
             $data = [
-                'title' => "Laporan Pekerjaan Tanggal ". tanggal_indo(($tgl)),
-                'getData' => $this->General_m->select('pekerjaan', ['tanggal' => $tgl], 'result', 'tanggal', 'desc'),
+                'title' => "Laporan Pekerjaan ". tanggal_indo(($tanggal)),
+                'getData' => $this->General_m->select('pekerjaan', ['tanggal' => $tanggal], 'result', 'tanggal', 'desc'),
             ];
             
             $pdf = new \TCPDF();
@@ -487,21 +550,4 @@
             $pdf->Output($data['title'].'.pdf');
         }
 
-        // 
-        // Export excel
-        //
-        public function excelPekerjaan()
-        {
-            $tahapan_1 = 'if(rab_id is not null AND tor_id is not null AND tug_id is not null AND justifikasi_id is not null AND ba_id is not null, 18, 0) as tahapan_1';
-            $tahapan_2 = 'if(profile_risiko_id is not null AND profile_risiko_id is not null, 14, 0) as tahapan_2';
-            $tahapan_3 = 'if(kkp_id is not null AND rks_id is not null AND referensi_harga_id is not null AND hpe_id is not null, 16, 0) as tahapan_3';
-            $tahapan_4 = 'if(hps_id is not null AND ba_aanwijzing_id is not null AND cda_id is not null AND perjanjian_id is not null AND jaminan_pelaksanaan_pemeliharaan_id is not null, 16, 0) as tahapan_4';
-            $tahapan_5 = 'if(kick_off_id is not null AND spk_id is not null AND spm_id is not null AND lpp_id is not null AND nrpp_id is not null AND ba_stp_id is not null AND ba_pembayaran_id is not null AND ba_smp_id is not null AND ba_pemeriksaan_id is not null AND amandemen_perjanjian_id is not null AND ba_denda_id is not null AND dokumen_audit_id is not null, 18, 0) as tahapan_5';
-            $tahapan_6 = 'if(pembayaran_id is not null, 18, 0) as tahapan_6';
-            $data = [
-                'getData'   => $this->General_m->select('pekerjaan', [], 'result', 'id_pekerjaan', 'asc', '*, '.$tahapan_1.', '.$tahapan_2.', '.$tahapan_3.', '.$tahapan_4.', '.$tahapan_5.', '.$tahapan_6.''),
-            ];   
-
-            $this->load->view('excel_pekerjaan', $data);
-        }
     }

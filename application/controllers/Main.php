@@ -16,16 +16,16 @@
         public function index($content = null)
         {  
             if (!$this->session->userdata('authenticated_cms')){
-                $this->load->view('login');
+                $this->load->view('admin/login');
             }else {
                 switch ($content) {
-                    case 'pekerjaan':
+                    case 'pendaftaran':
                         $data = [
                             'page'      => $content,
-                            'title'     => 'Pekerjaan | Monitoring Pekerjaan',
-                            'header'    => 'Pekerjaan',
-                            'getData'   => $this->General_m->select('pekerjaan', [], 'result', 'tanggal', 'desc'),
-                            'section'   => 'content/pekerjaan'
+                            'title'     => 'Pendaftaran | Monitoring pendaftaran',
+                            'header'    => 'Pendaftaran',
+                            'getData'   => $this->General_m->select('pendaftaran', [], 'result', 'cek_status', 'desc'),
+                            'section'   => 'admin/content/pendaftaran'
                         ];
                         break;
 
@@ -35,7 +35,17 @@
                             'title'     => 'User | Monitoring Pekerjaan',
                             'header'    => 'User',
                             'getData'   => $this->General_m->select('user', [], 'result'),
-                            'section'   => 'content/user'
+                            'section'   => 'admin/content/user'
+                        ];
+                        break;
+
+                    case 'range':
+                        $data = [
+                            'page'      => $content,
+                            'title'     => 'Range | Monitoring Pekerjaan',
+                            'header'    => 'Range Tanggal Pendaftaraan',
+                            'getData'   => $this->General_m->select('range', [], 'result'),
+                            'section'   => 'admin/content/range'
                         ];
                         break;
                     
@@ -45,12 +55,12 @@
                             'header'    => 'Dashboard',
                             'getData'   => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d')], 'result', 'tanggal', 'desc'),
                             'sukses'    => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d'), 'status' => 'selesai'], 'num_rows', 'tanggal', 'desc'),
-                            'jumlah_pekerjaan'   => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d')], 'num_rows', 'tanggal', 'desc'),
-                            'section'   => 'content/home'
+                            'jumlah_pendaftar'   => $this->General_m->select('pendaftaran', null, 'num_rows'),
+                            'section'   => 'admin/content/home'
                         ];
                         break;
                 }
-                $this->load->view('main', $data);
+                $this->load->view('admin/main', $data);
             }
         }
 
@@ -67,6 +77,7 @@
                         $field = new stdClass();
                             $field->id      = null;
                             $field->username      = null;
+                            $field->email      = null;
                     }else {
                         $field = $this->General_m->select('user', ['id' => $id], 'row');
                     }
@@ -76,49 +87,49 @@
                         'header'     => ucfirst($action) .' User',
                         'action'    => $action,
                         'field'     => $field,
-                        'section'   => 'form/form_user'
+                        'section'   => 'admin/form/form_user'
                     ];
                     break;
                     
-                case 'pekerjaan':
+                case 'pendaftaran':
                     if ($action == 'create') {
                         $field = new stdClass();
                             $field->id        = null;
-                            $field->pekerjaan = null;
-                            $field->tanggal   = null;
-                            $field->jam       = null;
+                            $field->cek_status = null;
                     }else {
 
-                        $field = $this->General_m->select('pekerjaan', ['id' => $id], 'row');
+                        $field = $this->General_m->select('pendaftaran', ['id' => $id], 'row');
                     }
                     $data = [
                         'page'      => $type,
-                        'title'     => 'Pekerjaan | Monitoring Pekerjaan',
-                        'header'     => ucfirst($action) .' Pekerjaan',
+                        'title'     => 'Pendaftaran | Monitoring Pendaftaran',
+                        'header'     => ucfirst($action) .' Pendaftaran',
                         'action'    => $action,
                         'field'     => $field,
-                        'section'   => 'form/pekerjaan'
+                        'section'   => 'admin/form/pendaftaran'
                     ];
                     break;
-            }
-            $this->load->view('main', $data);
-        }
+                case 'range':
+                    if ($action == 'create') {
+                        $field = new stdClass();
+                            $field->id        = null;
+                            $field->tanggal_awal = null;
+                            $field->tanggal_akhir = null;
+                    }else {
 
-        public function userDashboard($type = NULL, $action = NULL, $id = NULL) {
-            switch ($type) {
-                case 'pekerjaan':
-                    $field = $this->General_m->select('pekerjaan', ['id' => $id], 'row');
+                        $field = $this->General_m->select('range', ['id' => $id], 'row');
+                    }
                     $data = [
                         'page'      => $type,
-                        'title'     => 'Pekerjaan | Monitoring Pekerjaan',
-                        'header'     => ucfirst($action) .' Pekerjaan',
+                        'title'     => 'Range Tanggal Pendaftaran | Monitoring Pendaftaran',
+                        'header'     => ucfirst($action) .' Range Tanggal Pendaftaran',
                         'action'    => $action,
                         'field'     => $field,
-                        'section'   => 'form/pekerjaan_dashboard'
+                        'section'   => 'admin/form/range'
                     ];
                     break;
             }
-            $this->load->view('main', $data);
+            $this->load->view('admin/main', $data);
         }
 
         /*
@@ -147,6 +158,13 @@
                     }
                 break;
 
+                case 'user':
+                    $table = "user" ;
+                    $data = [
+                        'username'    => $this->input->post('username'),
+                        'email'            => $this->input->post('email'),
+                        'pass'            => md5($this->input->post('pass'))
+                    ];
                 break;
             }
 
@@ -172,54 +190,33 @@
         */
         public function update($type = null){
             switch ($type) {
-                case 'pekerjaan':
-                    $table = "pekerjaan" ;
+                case 'pendaftaran':
+                    $table = "pendaftaran" ;
                     $where = ['id' => $this->input->post('id')];
                     $data = [
-                        'pekerjaan'    => $this->input->post('pekerjaan'),
-                        'tanggal'     => $this->input->post('tanggal'),
-                        'jam'            => $this->input->post('jam'),
-                        'status'          => $this->input->post('status'),
-                        'keterangan'       => $this->input->post('keterangan')
+                        'cek_status'    => $this->input->post('cek_status')
                     ];
-        
-                    if (!empty($_FILES['imagesUpload']['name'][0])) {
-                        $get = $this->General_m->select('pekerjaan', $where, 'row');
-                        $gambar = explode(';', $get->foto);
-                        for ($i=0; $i < count($gambar) ; $i++) { 
-                            $fileSource     = './uploads/images/'. $gambar[$i];
-                            if (file_exists($fileSource) && $gambar[$i] != NULL) {
-                                unlink($fileSource);
-                            }
-                        }
-                        $data['foto'] = $this->imagesUpload();
-                    }
-
-                    if (!empty($_FILES['uploadPdf']['name'])) {
-                        $data['file_pdf'] = $this->filesUpload('uploadPdf', 'file_pdf', 'UploadUpdate', 'update', 'pekerjaan' , 'id');
-                    }
                     
                 break; 
                 case 'user':
                     $table = "user" ;
                     $where = ['id' => $this->input->post('id')];
                     $data = [
-                        'username'    => $this->input->post('username')
+                        'username'    => $this->input->post('username'),
+                        'email'            => $this->input->post('email')
                     ];
 
-                    if ($this->input->post('pin') != '') {
-                        $data['pin'] = md5($this->input->post('pin'));
+                    if ($this->input->post('pass') != '') {
+                        $data['pass'] = md5($this->input->post('pass'));
                     }
-
-                    if ($this->input->post('pin') != $this->input->post('pin_confirm')) {
-                        $this->session->set_flashdata([
-                            'alert'     => 'danger',
-                            'message'   => '<strong>Password tidak serasi <i class="fa fa-check-circle"></i></strong>',
-                        ]);
-                        redirect('main/proses/user/update/'.$this->input->post('id'));
-                        die;
-                    }
-                    
+                break;
+                case 'range':
+                    $table = "range" ;
+                    $where = ['id' => $this->input->post('id')];
+                    $data = [
+                        'tanggal_awal'    => $this->input->post('tanggal_awal'),
+                        'tanggal_akhir'            => $this->input->post('tanggal_akhir')
+                    ];
                 break;
             }
             
@@ -234,53 +231,7 @@
                     'message'   => '<strong>Update Gagal <i class="fa fa-times-circle"></i></strong>',
                     ]);
             }
-            redirect('main/index/'.$type.'');
-        }
-
-        public function updateDashboard($type = null){
-            switch ($type) {
-                case 'pekerjaan':
-                    $table = "pekerjaan" ;
-                    $where = ['id' => $this->input->post('id')];
-                    $data = [
-                        'pekerjaan'    => $this->input->post('pekerjaan'),
-                        'tanggal'     => $this->input->post('tanggal'),
-                        'jam'            => $this->input->post('jam'),
-                        'status'          => $this->input->post('status'),
-                        'keterangan'       => $this->input->post('keterangan')
-                    ];
-        
-                    if (!empty($_FILES['imagesUpload']['name'][0])) {
-                        $get = $this->General_m->select('pekerjaan', $where, 'row');
-                        $gambar = explode(';', $get->foto);
-                        for ($i=0; $i < count($gambar) ; $i++) { 
-                            $fileSource     = './uploads/images/'. $gambar[$i];
-                            if (file_exists($fileSource) && $gambar[$i] != NULL) {
-                                unlink($fileSource);
-                            }
-                        }
-                        $data['foto'] = $this->imagesUpload();
-                    }
-
-                    if (!empty($_FILES['uploadPdf']['name'])) {
-                        $data['file_pdf'] = $this->filesUpload('uploadPdf', 'file_pdf', 'UploadUpdate', 'update', 'pekerjaan' , 'id');
-                    }
-                    
-                break; 
-            }
-            
-            if ($this->General_m->update($table, $data, $where)) {
-                $this->session->set_flashdata([
-                    'alert'     => 'success',
-                    'message'   => '<strong>Update Sukses <i class="fa fa-check-circle"></i></strong>',
-                    ]);
-            }else {
-                $this->session->set_flashdata([
-                    'alert'     => 'danger',
-                    'message'   => '<strong>Update Gagal <i class="fa fa-times-circle"></i></strong>',
-                    ]);
-            }
-            redirect('/');
+            redirect('main/index/'.$type);
         }
 
         /*
@@ -290,19 +241,23 @@
         */
         public function delete($type = null){
             switch ($type) {
-                case 'pekerjaan':
-                    $table = "pekerjaan" ;
-                    $where = ['id' => $this->input->post('id')];
-                    $get = $this->General_m->select('pekerjaan', $where, 'row');
-                    $gambar = explode(';', $get->foto);
-                    for ($i=0; $i < count($gambar) ; $i++) { 
-                        $fileSource     = './uploads/images/'. $gambar[$i];
-                        if (file_exists($fileSource) && $gambar[$i] != NULL) {
-                            unlink($fileSource);
-                        }
-                    }
+                // case 'pekerjaan':
+                //     $table = "pekerjaan" ;
+                //     $where = ['id' => $this->input->post('id')];
+                //     $get = $this->General_m->select('pekerjaan', $where, 'row');
+                //     $gambar = explode(';', $get->foto);
+                //     for ($i=0; $i < count($gambar) ; $i++) { 
+                //         $fileSource     = './uploads/images/'. $gambar[$i];
+                //         if (file_exists($fileSource) && $gambar[$i] != NULL) {
+                //             unlink($fileSource);
+                //         }
+                //     }
 
-                    $this->filesUpload('uploadPdf', 'file_pdf', 'UploadDelete', 'delete', 'pekerjaan' , 'id');
+                //     $this->filesUpload('uploadPdf', 'file_pdf', 'UploadDelete', 'delete', 'pekerjaan' , 'id');
+                // break;
+                case 'user':
+                    $table = "user" ;
+                    $where = ['id' => $this->input->post('id')];
                 break;
             }
 
@@ -323,7 +278,7 @@
         public function detailJson($id = null)
         {
             $where = ['id' => $id];
-            $get = $this->General_m->select('pekerjaan', $where, 'row');
+            $get = $this->General_m->select('pendaftaran', $where, 'row');
 
             echo json_encode($get);
         }
@@ -353,25 +308,41 @@
         //     echo json_encode($result);
         // }
 
+        public function getEmailUser(){
+            $arrayEmail = [];
+            $getEmailUser     = $this->General_m->select("user", null, "result", "username", "desc", "*");
+            foreach ($getEmailUser as $key => $value) {
+                array_push($arrayEmail, $value->email);
+            }
+    
+            echo json_encode($arrayEmail);
+        }
+
         // 
         // Login Action
         //
         public function login(){
-            $pin   = $this->input->post('pin');
+            $email      = $this->input->post('email');
+            $password   = $this->input->post('pass');
             
-            $user = $this->General_m->select("user", null, "row");
-            
-            if (md5($pin) == $user->pin) {
-                $session = array(
-                    'authenticated_cms' => true,
-                    'id_user'           => $user->id,
-                    'username'          => $user->username
-                );
-                $this->session->set_userdata($session);
+            $user = $this->General_m->select("user", ['email' => $email], "row", null, null, null);
+    
+            if (empty($user)) {
+                $this->session->set_flashdata('message', 'Email tidak ditemukan');
             }else {
-                $this->session->set_flashdata('message', 'PIN tidak sesuai');
+                if (md5($password) == $user->pass) {
+                    $session = array(
+                        'authenticated_cms' => true,
+                        'id_user'           => $user->id,
+                        'email'             => $user->email,
+                        'username'          => $user->username
+                    );
+                    $this->session->set_userdata($session);
+                }else {
+                    $this->session->set_flashdata('message', 'Password tidak sesuai');
+                }
+                
             }
-
             redirect('main');
             
         }
@@ -382,7 +353,7 @@
         public function logout(){
             $this->session->sess_destroy();
             $this->session->unset_userdata('authenticated_cms');
-            redirect('main'); 
+            redirect('/main'); 
         }
 
         // 

@@ -22,7 +22,7 @@
                     case 'pendaftaran':
                         $data = [
                             'page'      => $content,
-                            'title'     => 'Pendaftaran | Monitoring pendaftaran',
+                            'title'     => 'Pendaftaran | Pendaftaran Vaksin',
                             'header'    => 'Pendaftaran',
                             'getData'   => $this->General_m->select('pendaftaran', [], 'result', 'cek_status', 'desc'),
                             'section'   => 'admin/content/pendaftaran'
@@ -32,7 +32,7 @@
                     case 'user':
                         $data = [
                             'page'      => $content,
-                            'title'     => 'User | Monitoring Pekerjaan',
+                            'title'     => 'User | Pendaftaran Vaksin',
                             'header'    => 'User',
                             'getData'   => $this->General_m->select('user', [], 'result'),
                             'section'   => 'admin/content/user'
@@ -42,7 +42,7 @@
                     case 'range':
                         $data = [
                             'page'      => $content,
-                            'title'     => 'Range | Monitoring Pekerjaan',
+                            'title'     => 'Range | Pendaftaran Vaksin',
                             'header'    => 'Range Tanggal Pendaftaraan',
                             'getData'   => $this->General_m->select('range', [], 'result'),
                             'section'   => 'admin/content/range'
@@ -51,10 +51,8 @@
                     
                     default:
                         $data = [
-                            'title'     => 'Dashboard | Monitoring Pekerjaan',
+                            'title'     => 'Dashboard | Pendaftaran Vaksin',
                             'header'    => 'Dashboard',
-                            'getData'   => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d')], 'result', 'tanggal', 'desc'),
-                            'sukses'    => $this->General_m->select('pekerjaan', ['tanggal' => date('Y-m-d'), 'status' => 'selesai'], 'num_rows', 'tanggal', 'desc'),
                             'jumlah_pendaftar'   => $this->General_m->select('pendaftaran', null, 'num_rows'),
                             'section'   => 'admin/content/home'
                         ];
@@ -83,7 +81,7 @@
                     }
                     $data = [
                         'page'      => $type,
-                        'title'     => 'User | Monitoring Pekerjaan',
+                        'title'     => 'User | Pendaftaran Vaksin',
                         'header'     => ucfirst($action) .' User',
                         'action'    => $action,
                         'field'     => $field,
@@ -102,7 +100,7 @@
                     }
                     $data = [
                         'page'      => $type,
-                        'title'     => 'Pendaftaran | Monitoring Pendaftaran',
+                        'title'     => 'Pendaftaran | Pendaftaran Vaksin',
                         'header'     => ucfirst($action) .' Pendaftaran',
                         'action'    => $action,
                         'field'     => $field,
@@ -121,7 +119,7 @@
                     }
                     $data = [
                         'page'      => $type,
-                        'title'     => 'Range Tanggal Pendaftaran | Monitoring Pendaftaran',
+                        'title'     => 'Range Tanggal Pendaftaran | Pendaftaran Vaksin',
                         'header'     => ucfirst($action) .' Range Tanggal Pendaftaran',
                         'action'    => $action,
                         'field'     => $field,
